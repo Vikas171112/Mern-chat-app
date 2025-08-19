@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "http-status-codes": "^2.3.0",
@@ -20,6 +21,7 @@
     "mongodb": "^6.18.0",
     "mongoose": "^8.3.4",
     "nodemailer": "^7.0.5",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "socket.io": "^4.8.1"
   }
 }
