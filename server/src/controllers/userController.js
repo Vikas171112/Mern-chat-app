@@ -1,5 +1,7 @@
 import { json } from "express";
 import {
+  addFriendService,
+  addtoFriendList,
   signInService,
   SignUpService,
   verifyOtpService,
@@ -44,6 +46,43 @@ export const signInController = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Logged In SuccessFully",
+      data: response,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const addFriendController = async (req, res) => {
+  try {
+    const { email: usertoaddemail } = req.body; // jis bande ko add karna hai
+    const loggedinuseremail = req.user.email;
+
+    const response = await addFriendService(loggedinuseremail, usertoaddemail);
+
+    return res.status(200).json({
+      success: true,
+      message: response.message,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const addtoFriendListController = async (req, res) => {
+  try {
+    const userId = req.user._id; // yeh login hone ke baad middleware se mil raha hai
+    const { friendId } = req.body; // body se sirf friendId destructure karo
+
+    const response = await addtoFriendList(userId, friendId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Friend Added Successfully",
       data: response,
     });
   } catch (error) {

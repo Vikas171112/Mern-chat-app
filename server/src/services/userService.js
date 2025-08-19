@@ -62,3 +62,62 @@ export const signInService = async ({ email, password }) => {
     throw error;
   }
 };
+export const addFriendService = async (loggedinuseremail, usertoaddemail) => {
+  try {
+    const usertoAdd = await userRepository.getUserByEmail(usertoaddemail);
+    if (!usertoAdd) {
+      throw new Error("User Not Found With this Email");
+    }
+
+    const loggedinUser = await userRepository.getUserByEmail(loggedinuseremail);
+    if (!loggedinUser) {
+      throw new Error("Logged-in User Not Found");
+    }
+
+    if (usertoAdd.friends.includes(loggedinUser._id)) {
+      throw new Error("You are already friends");
+    }
+
+    if (usertoAdd.friendRequests.includes(loggedinUser._id)) {
+      throw new Error("Friend request already sent");
+    }
+
+    usertoAdd.friendRequests.push(loggedinUser._id);
+
+    await usertoAdd.save();
+
+    return { message: "Friend request sent successfully" };
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+export const addtoFriendList = async (userId, friendId) => {
+  try {
+    const activeUser = await userRepository.getById(userId);
+    if (!activeUser) {
+      throw new Error("Login with a valid user first");
+    }
+    const friendUser = await userRepository.getById(friendId);
+    if (!friendUser) {
+      throw new Error("User with this id not found");
+    }
+
+    if (activeUser.friends.includes(friendId)) {
+      throw new Error("Already in friend list");
+    }
+
+    activeUser.friends = [...activeUser.friends, friendId];
+    friendUser.friends = [...friendUser.friends, userId];
+
+    await activeUser.save();
+    await friendUser.save();
+
+    return {
+      activeUser: activeUser.friends,
+      friendUser: friendUser.friends,
+    };
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
