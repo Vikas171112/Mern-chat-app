@@ -2,6 +2,7 @@ import express from "express";
 import { connectDB } from "./config/dbConfig.js";
 import { MONGO_URL } from "./config/serverConfig.js";
 import userRoutes from "./Routes/userRoutes.js";
+import messageRoutes from "./Routes/messageRoutes.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
@@ -41,6 +42,7 @@ io.on("connection", (socket) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoutes);
+app.use("/message", messageRoutes);
 
 const PORT = 5000;
 
