@@ -1,26 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchFriendList } from "../../apis/FriendApis";
 import { useChatStore } from "../../Store/chatStore";
+import { useEffect } from "react";
 
 export const useFetchFriendList = () => {
   const { setChatList } = useChatStore();
 
   const {
     isLoading,
+    isSuccess,
     isError,
     data: userData, // ab ye pura user object hoga
   } = useQuery({
-    queryKey: ["chatlist"],
+    queryKey: ["userData"],
     queryFn: fetchFriendList,
-    onSuccess: (data) => {
-      console.log("✅ React Query Success =>", data.friends);
-      setChatList(data.friends || []); // ab safe update hoga
-    },
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(userData, "FRom react query");
+      setChatList(userData || []);
+    }
+  }, [isSuccess, userData]);
 
   return {
     isLoading,
     isError,
-    friendsData: userData?.friends || [], // direct friends return kar
+    friendsData: userData || [], // direct friends return kar
   };
 };

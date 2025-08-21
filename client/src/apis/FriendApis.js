@@ -9,8 +9,8 @@ export const fetchFriendList = async (id) => {
         authorization: token,
       },
     });
-    console.log(response.data);
-    return response.data.data;
+    console.log(response.data.data.friends);
+    return response.data.data.friends;
   } catch (error) {
     console.log("Api Error", error);
     throw error;

@@ -1,7 +1,8 @@
-import { json } from "express";
+import { json, response } from "express";
 import {
   addFriendService,
   addtoFriendList,
+  getUserFriendsService,
   signInService,
   SignUpService,
   verifyOtpService,
@@ -83,6 +84,22 @@ export const addtoFriendListController = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Friend Added Successfully",
+      data: response,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const getUserFriendsController = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const response = await getUserFriendsService(userId);
+    return res.status(200).json({
+      success: true,
+      message: "Friends Fetched Successfully",
       data: response,
     });
   } catch (error) {

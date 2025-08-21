@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   addFriendController,
   addtoFriendListController,
+  getUserFriendsController,
   signInController,
   signUpController,
   verifyOtpController,
@@ -14,4 +15,5 @@ router.post("/verify", verifyOtpController);
 router.post("/signin", signInController);
 router.post("/addfriend", isAuthenticated, addFriendController);
 router.post("/addtofriendlist", isAuthenticated, addtoFriendListController);
+router.get("/friends", isAuthenticated, getUserFriendsController);
 export default router;

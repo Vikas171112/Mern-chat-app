@@ -121,3 +121,11 @@ export const addtoFriendList = async (userId, friendId) => {
     throw new Error(error.message);
   }
 };
+export const getUserFriendsService = async (id) => {
+  try {
+    const friends = await userRepository.getUserFriends(id);
+    return friends;
+  } catch (error) {
+    throw error;
+  }
+};

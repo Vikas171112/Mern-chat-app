@@ -7,11 +7,13 @@ import { useChatStore } from "../../Store/chatStore";
 
 function ChatList() {
   const { chatList, setSelectedUser } = useChatStore();
-  const { isLoading, isError } = useFetchFriendList();
+  const { isLoading, isError, friendsData } = useFetchFriendList();
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Failed to load friends</p>;
-  console.log(chatList);
+
+  console.log(friendsData);
+  console.log(chatList, "Chatlist");
 
   return (
     <div className="h-screen w-[40%]">
