@@ -7,7 +7,7 @@ function MessageApi({ message }) {
       role="alert"
     >
       <p className="font-medium ">
-        Error<span className="font-normal text-orange-400">{message}</span>
+        Error:<span className="font-normal text-orange-400">{message}</span>
       </p>
     </div>
   );
